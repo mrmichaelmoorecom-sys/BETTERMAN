@@ -1,0 +1,32 @@
+{
+  "checkpoint_date": "2026-06-11",
+  "day": 1,
+  "elapsed_pct": 0.1,
+  "grade": "behind",
+  "verdicts": {
+    "stories_told": "behind",
+    "minds_reached": "behind",
+    "mentees_trained": "behind",
+    "engine_coefficient": "behind",
+    "service_hours": "behind",
+    "orgs_embedded": "behind",
+    "public_showings": "behind",
+    "dollars_spent": "ok"
+  },
+  "flags": [
+    "Stories told: 0 vs 0.1 expected",
+    "Minds reached: 0 vs 500.0 expected",
+    "Mentees trained: 0 vs 0.0 expected",
+    "Engine coefficient: 0 vs 0.0 expected",
+    "Service hours: 0 vs 1.0 expected",
+    "Orgs embedded: 0 vs 0.0 expected",
+    "Public showings: 0 vs 0.0 expected"
+  ],
+  "next_actions": [
+    "Dashboard deployed",
+    "Shortlist 5 LA orgs",
+    "Consent/dignity protocol drafted"
+  ],
+  "days_since_last_log": 0,
+  "ai_commentary": null
+}

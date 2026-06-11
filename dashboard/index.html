@@ -68,6 +68,12 @@
       <h3>Mission log</h3>
       <div class="log" id="log"></div>
     </div>
+    <div class="card">
+      <h3>Last checkpoint <span id="ckdate" style="color:var(--muted)"></span></h3>
+      <div class="big" id="ckgrade" style="font-size:24px">no checkpoint yet</div>
+      <div class="log" id="ckbody" style="margin-top:10px"></div>
+      <div class="target" style="margin-top:10px">run: python3 scripts/checkpoint.py</div>
+    </div>
   </div>
 
   <div class="foot">SOURCE OF TRUTH: data/metrics.json · RED TICK = WHERE YOU SHOULD BE TODAY AT LINEAR PACE · UPDATE VIA REPO COMMIT</div>
@@ -125,6 +131,18 @@ function render(d){
 }
 
 fetch("../data/metrics.json").then(r=>r.json()).then(render).catch(()=>render(FALLBACK));
+
+const GC={on_track:"--green",mixed:"--amber",behind:"--coral",stalled:"--coral"};
+fetch("../data/checkpoint_latest.json").then(r=>r.json()).then(c=>{
+  document.getElementById("ckdate").textContent="· "+c.checkpoint_date;
+  const g=document.getElementById("ckgrade");
+  g.textContent=c.grade.replace("_"," ").toUpperCase();
+  g.style.color=`var(${GC[c.grade]||"--muted"})`;
+  document.getElementById("ckbody").innerHTML=
+    c.flags.map(f=>`<p>⚑ ${f}</p>`).join("")+
+    c.next_actions.map(a=>`<p>→ ${a}</p>`).join("")+
+    (c.ai_commentary&&!c.ai_commentary.startsWith("(")?`<p style="color:var(--purple)">${c.ai_commentary}</p>`:"");
+}).catch(()=>{});
 </script>
 </body>
 </html>
