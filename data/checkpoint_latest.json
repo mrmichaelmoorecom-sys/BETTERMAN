@@ -2,25 +2,20 @@
   "checkpoint_date": "2026-06-11",
   "day": 1,
   "elapsed_pct": 0.1,
-  "grade": "behind",
+  "grade": "mixed",
   "verdicts": {
-    "stories_told": "behind",
+    "stories_told": "early",
     "minds_reached": "behind",
-    "mentees_trained": "behind",
-    "engine_coefficient": "behind",
+    "mentees_trained": "early",
+    "engine_coefficient": "early",
     "service_hours": "behind",
-    "orgs_embedded": "behind",
-    "public_showings": "behind",
+    "orgs_embedded": "early",
+    "public_showings": "early",
     "dollars_spent": "ok"
   },
   "flags": [
-    "Stories told: 0 vs 0.1 expected",
     "Minds reached: 0 vs 500.0 expected",
-    "Mentees trained: 0 vs 0.0 expected",
-    "Engine coefficient: 0 vs 0.0 expected",
-    "Service hours: 0 vs 1.0 expected",
-    "Orgs embedded: 0 vs 0.0 expected",
-    "Public showings: 0 vs 0.0 expected"
+    "Service hours: 0 vs 1.0 expected"
   ],
   "next_actions": [
     "Dashboard deployed",

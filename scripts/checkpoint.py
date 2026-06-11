@@ -35,7 +35,10 @@ def main():
                 flags.append(f"Spending ahead of cap: ${m['value']} vs ${expected:.0f} pace")
             continue
         expected = m["target_2031"] * frac
-        ratio = (m["value"] / expected) if expected else 0
+        if expected < 1:
+            verdicts[key] = "early"  # too soon to judge — grace period
+            continue
+        ratio = m["value"] / expected
         verdicts[key] = "ahead" if ratio >= AHEAD else "behind" if ratio < BEHIND else "on_pace"
         if verdicts[key] == "behind":
             flags.append(f"{m['label']}: {m['value']} vs {expected:.1f} expected")
