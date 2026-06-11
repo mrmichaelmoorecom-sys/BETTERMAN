@@ -1,0 +1,33 @@
+{
+  "project": "BETTERMAN",
+  "bet": "A storytelling engine for the unseen of Los Angeles",
+  "started": "2026-06-11",
+  "horizon": "2031-06-11",
+  "updated": "2026-06-11",
+  "phase": {
+    "current": 0,
+    "name": "Foundation",
+    "window": "2026-06 to 2026-09"
+  },
+  "metrics": {
+    "stories_told": { "label": "Stories told", "value": 0, "target_2031": 150, "unit": "stories" },
+    "minds_reached": { "label": "Minds reached", "value": 0, "target_2031": 500000, "unit": "people", "note": "views + attendance + org-reported reach; log method per entry" },
+    "mentees_trained": { "label": "Mentees trained", "value": 0, "target_2031": 25, "unit": "people" },
+    "engine_coefficient": { "label": "Engine coefficient", "value": 0, "target_2031": 5, "unit": "mentees who now teach others", "note": "the metric that proves it runs without Mike" },
+    "service_hours": { "label": "Service hours", "value": 0, "target_2031": 1000, "unit": "hours" },
+    "orgs_embedded": { "label": "Orgs embedded", "value": 0, "target_2031": 3, "unit": "orgs" },
+    "public_showings": { "label": "Public showings", "value": 0, "target_2031": 10, "unit": "events" },
+    "dollars_spent": { "label": "Dollars spent (cap $1k/yr)", "value": 0, "target_2031": 5000, "unit": "USD", "note": "transparency ledger — every dollar logged" }
+  },
+  "checklist_phase0": [
+    { "item": "Intake + ratified bet", "done": true },
+    { "item": "Repo + tracking live", "done": true },
+    { "item": "Dashboard deployed", "done": false },
+    { "item": "Shortlist 5 LA orgs", "done": false },
+    { "item": "Consent/dignity protocol drafted", "done": false },
+    { "item": "Story #001 shot and told", "done": false }
+  ],
+  "log": [
+    { "date": "2026-06-11", "entry": "Project zero. Intake answered, bet ratified, system built. All metrics at 0." }
+  ]
+}

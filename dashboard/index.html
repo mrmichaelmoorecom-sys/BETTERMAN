@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BETTERMAN — mission dashboard</title>
+<style>
+  :root{
+    --bg:#0a0e14; --panel:#121826; --panel2:#1a2234; --line:#2a3550;
+    --text:#e8ecf4; --muted:#8b96ad;
+    --amber:#ffb347; --teal:#2dd4bf; --purple:#a78bfa; --coral:#fb7185; --green:#4ade80; --blue:#60a5fa;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:"Helvetica Neue",Arial,sans-serif; padding:24px; min-height:100vh;}
+  .lcars{display:flex; gap:14px; align-items:stretch; margin-bottom:22px;}
+  .lcars .cap{width:90px; border-radius:40px 0 0 40px; background:var(--amber);}
+  .lcars .head{flex:1; background:var(--panel); border-radius:0 18px 18px 0; padding:18px 26px; border-left:6px solid var(--amber);}
+  h1{font-size:26px; letter-spacing:2px; color:var(--amber);}
+  .sub{color:var(--muted); margin-top:4px; font-size:14px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px;}
+  .card h3{font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:10px;}
+  .big{font-size:34px; font-weight:700; line-height:1;}
+  .target{color:var(--muted); font-size:13px; margin-top:4px;}
+  .bar{height:12px; background:var(--panel2); border-radius:8px; overflow:hidden; margin-top:10px; position:relative;}
+  .bar>i{display:block; height:100%; border-radius:8px; min-width:4px; transition:width .8s ease;}
+  .pace{position:absolute; top:-3px; width:2px; height:18px; background:var(--coral); opacity:.9;}
+  .phases{display:flex; gap:8px; margin:22px 0;}
+  .ph{flex:1; padding:12px 14px; border-radius:12px; background:var(--panel); border:1px solid var(--line); color:var(--muted);}
+  .ph b{display:block; color:var(--text); font-size:14px; margin-bottom:2px;}
+  .ph small{font-size:11px;}
+  .ph.active{background:#2b2410; border-color:var(--amber); box-shadow:0 0 18px rgba(255,179,71,.25);}
+  .ph.active b{color:var(--amber);}
+  .ph.done{border-color:var(--green);}
+  .ph.done b{color:var(--green);}
+  ul.check{list-style:none;}
+  ul.check li{padding:8px 4px; border-bottom:1px solid var(--panel2); font-size:15px; display:flex; gap:10px; align-items:center;}
+  .tick{width:20px; height:20px; border-radius:6px; border:2px solid var(--muted); display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex:none;}
+  li.done .tick{background:var(--green); border-color:var(--green); color:#06270f;}
+  li.done span{color:var(--muted); text-decoration:line-through;}
+  .log{font-size:14px; line-height:1.6;}
+  .log .d{color:var(--teal); font-weight:700; margin-right:8px;}
+  .foot{margin-top:26px; color:var(--muted); font-size:12px; letter-spacing:1px;}
+  .pulse{display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--green); margin-right:8px; animation:p 2s infinite;}
+  @keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
+  #days{color:var(--purple); font-weight:700;}
+</style>
+</head>
+<body>
+  <div class="lcars">
+    <div class="cap"></div>
+    <div class="head">
+      <h1>BETTERMAN</h1>
+      <div class="sub">A storytelling engine for the unseen of Los Angeles · Jun 2026 → Jun 2031 · <span class="pulse"></span>day <span id="days">…</span> of 1826</div>
+    </div>
+  </div>
+
+  <div class="phases" id="phases"></div>
+
+  <div class="grid" id="metrics"></div>
+
+  <div class="grid" style="margin-top:14px;">
+    <div class="card">
+      <h3>Phase 0 checklist — foundation</h3>
+      <ul class="check" id="checklist"></ul>
+    </div>
+    <div class="card">
+      <h3>Mission log</h3>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+
+  <div class="foot">SOURCE OF TRUTH: data/metrics.json · RED TICK = WHERE YOU SHOULD BE TODAY AT LINEAR PACE · UPDATE VIA REPO COMMIT</div>
+
+<script>
+const FALLBACK = {"started":"2026-06-11","horizon":"2031-06-11","phase":{"current":0},
+"metrics":{"stories_told":{"label":"Stories told","value":0,"target_2031":150},
+"minds_reached":{"label":"Minds reached","value":0,"target_2031":500000},
+"mentees_trained":{"label":"Mentees trained","value":0,"target_2031":25},
+"engine_coefficient":{"label":"Engine coefficient","value":0,"target_2031":5},
+"service_hours":{"label":"Service hours","value":0,"target_2031":1000},
+"orgs_embedded":{"label":"Orgs embedded","value":0,"target_2031":3},
+"public_showings":{"label":"Public showings","value":0,"target_2031":10},
+"dollars_spent":{"label":"Dollars spent (cap $1k/yr)","value":0,"target_2031":5000}},
+"checklist_phase0":[{"item":"Intake + ratified bet","done":true},{"item":"Repo + tracking live","done":true},{"item":"Dashboard deployed","done":false},{"item":"Shortlist 5 LA orgs","done":false},{"item":"Consent/dignity protocol drafted","done":false},{"item":"Story #001 shot and told","done":false}],
+"log":[{"date":"2026-06-11","entry":"Project zero. Intake answered, bet ratified, system built. All metrics at 0."}]};
+
+const COLORS = ["--teal","--purple","--amber","--coral","--green","--blue","--teal","--purple"];
+const PHASES = [
+  ["Phase 0","Foundation","Jun–Sep 2026"],
+  ["Phase 1","Embed","Oct 2026–Dec 2027"],
+  ["Phase 2","First cohort","2028"],
+  ["Phase 3","Engine","2029–2030"],
+  ["Phase 4","Handoff","2030–Jun 2031"]
+];
+
+function render(d){
+  const start=new Date(d.started), end=new Date(d.horizon||"2031-06-11"), now=new Date();
+  const total=(end-start)/864e5, elapsed=Math.max(0,(now-start)/864e5);
+  const frac=Math.min(1, elapsed/total);
+  document.getElementById("days").textContent=Math.max(1,Math.ceil(elapsed));
+
+  document.getElementById("phases").innerHTML = PHASES.map((p,i)=>{
+    const cls = i<d.phase.current?"ph done":i===d.phase.current?"ph active":"ph";
+    return `<div class="${cls}"><b>${p[0]} · ${p[1]}</b><small>${p[2]}</small></div>`;
+  }).join("");
+
+  document.getElementById("metrics").innerHTML = Object.values(d.metrics).map((m,i)=>{
+    const pct=Math.min(100, 100*m.value/m.target_2031);
+    const c=`var(${COLORS[i%COLORS.length]})`;
+    const isBudget=/dollar/i.test(m.label);
+    const paceLeft=isBudget?null:Math.min(99.5,frac*100);
+    return `<div class="card"><h3>${m.label}</h3>
+      <div class="big" style="color:${c}">${m.value.toLocaleString()}</div>
+      <div class="target">target ${m.target_2031.toLocaleString()} by 2031${isBudget?" (spend ceiling, lower = better)":""}</div>
+      <div class="bar"><i style="width:${pct}%;background:${c}"></i>${paceLeft!==null?`<span class="pace" style="left:${paceLeft}%"></span>`:""}</div>
+    </div>`;
+  }).join("");
+
+  document.getElementById("checklist").innerHTML = d.checklist_phase0.map(c=>
+    `<li class="${c.done?"done":""}"><span class="tick">${c.done?"✓":""}</span><span>${c.item}</span></li>`).join("");
+
+  document.getElementById("log").innerHTML = [...d.log].reverse().map(l=>
+    `<p><span class="d">${l.date}</span>${l.entry}</p>`).join("");
+}
+
+fetch("../data/metrics.json").then(r=>r.json()).then(render).catch(()=>render(FALLBACK));
+</script>
+</body>
+</html>
