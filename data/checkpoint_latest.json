@@ -1,7 +1,7 @@
 {
-  "checkpoint_date": "2026-06-11",
-  "day": 1,
-  "elapsed_pct": 0.1,
+  "checkpoint_date": "2026-06-22",
+  "day": 12,
+  "elapsed_pct": 0.6,
   "grade": "mixed",
   "verdicts": {
     "stories_told": "early",
@@ -14,8 +14,8 @@
     "dollars_spent": "ok"
   },
   "flags": [
-    "Minds reached: 0 vs 500.0 expected",
-    "Service hours: 0 vs 1.0 expected"
+    "Minds reached: 0 vs 3012.0 expected",
+    "Service hours: 0 vs 6.0 expected"
   ],
   "next_actions": [
     "Dashboard deployed",
