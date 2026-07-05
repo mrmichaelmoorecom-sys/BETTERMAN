@@ -3,7 +3,7 @@
   "bet": "A storytelling engine for the unseen of Los Angeles",
   "started": "2026-06-11",
   "horizon": "2031-06-11",
-  "updated": "2026-06-22",
+  "updated": "2026-06-28",
   "phase": {
     "current": 0,
     "name": "Foundation",
@@ -29,6 +29,7 @@
   ],
   "log": [
     { "date": "2026-06-11", "entry": "Project zero. Intake answered, bet ratified, system built. All metrics at 0." },
-    { "date": "2026-06-22", "entry": "Weekly pulse (automated): no response from Mike this week — silence logged as data. Metrics unchanged. Phase 0 infra items still open; first one is dashboard deployment." }
+    { "date": "2026-06-22", "entry": "Weekly pulse (automated): no response from Mike this week — silence logged as data. Metrics unchanged. Phase 0 infra items still open; first one is dashboard deployment." },
+    { "date": "2026-06-28", "entry": "Weekly pulse (automated): second consecutive no-response week. Metrics unchanged. On pace for Phase 0 completion by Sep 2026, but Phase 0 infra work (dashboard, org shortlist, consent protocol) not yet started. Checkpoint: day 19 of 1826, 1.0% elapsed." }
   ]
 }
